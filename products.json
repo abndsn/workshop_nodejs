@@ -1,0 +1,10 @@
+{
+    "id":               "1",
+    "name":             "Echo Dot",
+    "description":      "Notre enceinte connectée la plus populaire : désormais avec un design en tissu et dotée d'un haut-parleur amélioré pour un son plus riche et plus puissant.",
+    "USD_price":        "24,23",
+    "EUR_price":        "22,00",
+    "file_link":        "https://images-na.ssl-images-amazon.com/images/I/61u48FEs0rL._AC_SL1000_.jpg",
+    "creation_date":    "2019-11-25",
+    "orders_counter":   "5"
+}

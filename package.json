@@ -1,0 +1,11 @@
+{
+  "name": "workshop_abnd",
+  "version": "1.0.0",
+  "description": "Boutique en ligne",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Abdallah Ndiaye",
+  "license": "ISC"
+}
