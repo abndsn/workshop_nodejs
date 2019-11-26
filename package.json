@@ -4,8 +4,16 @@
   "description": "Boutique en ligne",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Abdallah Ndiaye",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "http": "0.0.0",
+    "postman": "^0.2.0",
+    "pug": "^2.0.4"
+  }
 }
