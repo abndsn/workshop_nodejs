@@ -1,7 +1,28 @@
 var express = require('express'); 
+var passport = require('passport'); 
+var LocalStrategy = require('passport-local').Strategy;
+const mongoose = require('mongoose');
+
+var bodyParser = require('body-parser');
 var app = express(); 
 
-const mongoose = require('mongoose');
+
+    app.use(express.static('public'));
+    app.use(bodyParser.urlencoded({ extended: true }));;
+    app.use(passport.initialize());
+    app.use(passport.session({ secret: "workshop_abnd" }));
+
+    passport.serializeUser(function(user, done) {
+        done(null, user);
+      });
+      
+      passport.deserializeUser(function(user, done) {
+        done(null, user);
+      });
+ // support json encoded bodies
+ // support encoded bodies
+
+
 
 mongoose.connect('mongodb://localhost:27017/ebook')
 
@@ -23,9 +44,16 @@ var schema = new mongoose.Schema({
                                     creation_date: 'date',
                                     orders_counter: 'number'
                                 });
+var schema_user = new mongoose.Schema( {
+                                            user : 'string',
+                                            passe: 'string',
+                                            profil: 'string'
+                                        });
+
 var Tank = mongoose.model('products', schema);
 
-console.log(Tank);
+var userTank = mongoose.model('users', schema_user);
+//console.log(Tank);
 
 // Set EJS as templating engine 
 app.use('/public', express.static('public'));
@@ -34,28 +62,28 @@ app.set('view engine', 'ejs');
 
 const port = 3000;
 
-var data = [
-                {
-                    "id":               "echo",
-                    "name":             "Echo Dot",
-                    "description":      "Notre enceinte connectée la plus populaire : désormais avec un design en tissu et dotée d'un haut-parleur amélioré pour un son plus riche et plus puissant.",
-                    "USD_price":        19.96,
-                    "EUR_price":        21.00,
-                    "file_link":        "https://images-na.ssl-images-amazon.com/images/I/61u48FEs0rL._AC_SL1000_.jpg",
-                    "creation_date":    "2019-11-25",
-                    "orders_counter":   5
-                },
-                {
-                    "id":               "posture",
-                    "name":             "Olymstars Correcteur de Posture",
-                    "description":      "Olymstars Correcteur de Posture, Réglable et Respirant Correcteur Dos - Soulager Les Douleurs Dorsales, Colonne, Thoraciques, Cou et Epaules - Améliorer Posture avec Ceinture Lombaire Homme Femme",
-                    "USD_price":        24.23,
-                    "EUR_price":        22.00,
-                    "file_link":        "https://images-na.ssl-images-amazon.com/images/I/61db73q4lYL._AC_SL1000_.jpg",
-                    "creation_date":    "2019-11-25",
-                    "orders_counter":   7
-                }
-            ];
+passport.use(new LocalStrategy( 
+    {
+        usernameField: 'username',
+        passwordField: 'password'
+    },
+    function(username, password, done) {
+        userTank.findOne({ user: username }, function (err, user) {
+        if (err) { return done(err); }
+        if (!user) {
+          return done(null, false, { message: 'Incorrect username.' });
+        }
+        if (user.passe != password) {
+          return done(null, false, { message: 'Incorrect password.' });
+        }
+        return done(null, user);
+      });
+    }
+  ));
+
+
+var data = [];
+var onedata = [];
 
 app.get('/',(req, res)=>{ 
 
@@ -65,8 +93,18 @@ app.get('/',(req, res)=>{
 
       Tank.find({}, function(err, result) {
         if (err) throw err;
-        console.log(result);
+       // console.log(result);
+       data = result
+
+       if(params) {
+           Tank.find({id: `${params}`}, function(erro, oned) {
+               console.log(oned)
+               res.render('index', {data:data, onedata:oned}); 
+           })
         
+        } else {
+            res.render('index', {data:data}); 
+        }
       })
         console.log(params);
     } else {
@@ -77,10 +115,38 @@ app.get('/',(req, res)=>{
           })*/
     }
 
-
-    res.render('index', {data:data}); 
+ 
       
     }); 
+
+    app.get('/users', (req, res) => {
+        console.log(req.params)
+    })
+
+    app.get('/login',(req, res)=>{ 
+        console.log('login')
+        res.render('login');
+        console.log(req.user)
+    });
+    app.post('/login', 
+            passport.authenticate('local', { successRedirect: '/',
+            failureRedirect: '/login',
+            failureFlash: false })
+        );
+            // If this function gets called, authentication was successful.
+            // `req.user` contains the authenticated user.
+            //res.redirect('/users/' + req.user.username);
+            //console.log( req.user);
+           // });
+    
+    /*(req, res) => {
+        var user_id = req.body.username;
+       // var token = req.body.token;
+        var passe = req.body.passuser;
+    
+        console.log(user_id + ' ' + passe  );*/
+       
+
 
 app.listen(port, () => console.log(`>Template ejs ${port}`));
 
@@ -96,3 +162,6 @@ const server = http.createServer( (req, res) => {
 server.listen(3000, '127.0.0.1',(port, hostname) => {
     console.log( ' port: ' );
 });*/
+
+// orders : produit_id , user_id, date_commande, prix
+
