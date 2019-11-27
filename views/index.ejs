@@ -16,14 +16,45 @@
     <a class="item">Testimonials</a>
     <a class="item" href="/login">Login</a>
 </div>
-    <center>This is my home page.
-    <h5>Workshop</h5></center> 
-    <div class="ui relaxed divided list">
+    <center>
+    <h5></h5></center> 
+    <% if(typeof onedata == 'undefined'  ) { %>
+        <% } else { %>
+            <div class="ui container " style="border-bottom:coral 4px solid; ">
+            <div class="ui inverted circular segment " style="height: 154px; width: 154px;float: left; margin-right: 20px;">
+                    <h2 class="ui inverted header">
+                      Buy Now
+                      <div class="sub header">$<%= onedata[0].USD_price  %></div>
+                    </h2>
+          </div>
+          <div class="segment" style='min-height:154px; margin-bottom: 40px;'>
+                <div class="image">
+                        <img src="<%= onedata[0].file_link %> " class="ui medium right floated image">
+                      </div>
+            <h1><%= onedata[0].name %></h1>
+            <p><%= onedata[0].description %></p>
+
+            <a class="button primary" href="#orders/<%= onedata[0].id %>">  <i class="shop icon"></i> Shop</a>
+            
+            </div>
+         
+    
+        <% }; %>
+        </div>
+
+    <div class="ui items divided "> 
             <% data.forEach((item)=>{%> 
             <div class="item">
+                    <div class="image">
+                            <img src="<%= item.file_link %> ">
+                          </div>
                     <i class="large github middle aligned icon"></i>
                     <div class="content">
                       <a class="header" href="?id=<%= item.id%>"><%= item.name %></a>
+                      <div class="meta">
+                            <span class="price">$<%= item.USD_price %></span>
+                            <span class="stay">orders: <%= item.orders_counter  %></span>
+                          </div>
                       <div class="description"><%= item.description %></div>
                     </div>
                 
@@ -31,11 +62,7 @@
             </div>
             <%});%> 
     </div>
-   <% if(typeof onedata == 'undefined'  ) { %>
-    <% } else { %>
-    <%= onedata %> <br>
-
-    <% }; %>
+  
         </div>
 </body> 
   

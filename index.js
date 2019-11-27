@@ -126,7 +126,7 @@ app.get('/',(req, res)=>{
     app.get('/login',(req, res)=>{ 
         console.log('login')
         res.render('login');
-        console.log(req.user)
+        
     });
     app.post('/login', 
             passport.authenticate('local', { successRedirect: '/',
