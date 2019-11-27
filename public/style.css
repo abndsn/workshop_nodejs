@@ -1,0 +1,12 @@
+body { 
+    background-color:white; 
+    text-decoration-color: black; 
+    font-size:1.2em; 
+    font-family: Verdana, Geneva, Tahoma, sans-serif; 
+} 
+li {
+    border-bottom: 1px solid cornflowerblue;
+    padding: 15px 0;
+}
+a { text-decoration: none;
+color: black;}

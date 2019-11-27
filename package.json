@@ -11,8 +11,10 @@
   "author": "Abdallah Ndiaye",
   "license": "ISC",
   "dependencies": {
+    "ejs": "^3.0.1",
     "express": "^4.17.1",
     "http": "0.0.0",
+    "mongoose": "^5.7.12",
     "postman": "^0.2.0",
     "pug": "^2.0.4"
   }

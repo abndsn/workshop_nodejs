@@ -1,0 +1,19 @@
+<!DOCTYPE html> 
+<html> 
+  
+<head> 
+    <title>Home Page</title> 
+    <link rel="stylesheet" type="text/css" href="/public/style.css">
+</head> 
+  
+<body> 
+    <center>This is my home page.
+    <h5>Workshop</h5></center> 
+    <ul> 
+        <% data.forEach((item)=>{%> 
+        <li><a href="?id=<%= item.id%>"><%= item.name %></a></li>  
+        <%});%> 
+    </ul> 
+</body> 
+  
+</html>     
