@@ -2,13 +2,15 @@ var express = require('express');
 var passport = require('passport'); 
 var LocalStrategy = require('passport-local').Strategy;
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const bodyParser = require('body-parser');
+const saltRounds = 10;
 
-var bodyParser = require('body-parser');
 var app = express(); 
 
 
     app.use(express.static('public'));
-    app.use(bodyParser.urlencoded({ extended: true }));;
+    //app.use(bodyParser.urlencoded({ extended: true }));
     app.use(passport.initialize());
     app.use(passport.session({ secret: "workshop_abnd" }));
 
@@ -115,7 +117,12 @@ app.get('/',(req, res)=>{
           })*/
     }
 
- 
+    bcrypt.genSalt(saltRounds, function(err, salt) {
+        bcrypt.hash("ndiaye", salt, function(err, hash) {
+            // Store hash in your password DB.
+            console.log(hash);
+        });
+    });
       
     }); 
 

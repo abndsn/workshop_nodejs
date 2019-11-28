@@ -1,0 +1,23 @@
+mocha => test unitaire
+jshint => verification syntax
+Yeoman => npm -i -g yo generator-rest
+    yo rest # new project
+    yo rest:api # new api
+
+node shell ou  Repl => deboguer
+
+    var stack =  new Error().stack console.log( stack )
+    chrome devtools => ajouter debugger d
+
+    choisir un bon package npm avec => lodash
+
+
+Modules Api
+Meteor => application en temps reel
+Loopback => englobe express
+Sails
+Express
+Restify
+Total
+Hapi
+Koa

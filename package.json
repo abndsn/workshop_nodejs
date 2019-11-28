@@ -11,14 +11,18 @@
   "author": "Abdallah Ndiaye",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.7",
     "body-parser": "^1.19.0",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
+    "express-restify-mongoose": "^5.1.0",
+    "helmet": "^3.21.2",
     "http": "0.0.0",
     "mongoose": "^5.7.12",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "postman": "^0.2.0",
-    "pug": "^2.0.4"
+    "pug": "^2.0.4",
+    "xssfilter": "^0.5.3"
   }
 }
