@@ -10,7 +10,7 @@ var app = express();
 
 
     app.use(express.static('public'));
-    //app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.urlencoded({ extended: true }));
     app.use(passport.initialize());
     app.use(passport.session({ secret: "workshop_abnd" }));
 
@@ -79,6 +79,7 @@ passport.use(new LocalStrategy(
           return done(null, false, { message: 'Incorrect password.' });
         }
         return done(null, user);
+        
       });
     }
   ));
@@ -87,8 +88,11 @@ passport.use(new LocalStrategy(
 var data = [];
 var onedata = [];
 
-app.get('/',(req, res)=>{ 
 
+
+app.get('/',(req, res)=> { 
+
+    //console.log(res)
     const url = req.url;
     var params = url.substr(5);
     if( req.method === 'GET') {
@@ -100,7 +104,7 @@ app.get('/',(req, res)=>{
 
        if(params) {
            Tank.find({id: `${params}`}, function(erro, oned) {
-               console.log(oned)
+              // console.log(oned)
                res.render('index', {data:data, onedata:oned}); 
            })
         
@@ -108,7 +112,7 @@ app.get('/',(req, res)=>{
             res.render('index', {data:data}); 
         }
       })
-        console.log(params);
+        //console.log(params);
     } else {
        /* Tank.find({id: `${params}`}, function(err, result) {
             if (err) throw err;
@@ -116,14 +120,16 @@ app.get('/',(req, res)=>{
             
           })*/
     }
+   
 
     bcrypt.genSalt(saltRounds, function(err, salt) {
         bcrypt.hash("ndiaye", salt, function(err, hash) {
             // Store hash in your password DB.
             console.log(hash);
+            
         });
     });
-      
+    
     }); 
 
     app.get('/users', (req, res) => {
@@ -131,15 +137,17 @@ app.get('/',(req, res)=>{
     })
 
     app.get('/login',(req, res)=>{ 
-        console.log('login')
+       
         res.render('login');
         
     });
     app.post('/login', 
-            passport.authenticate('local', { successRedirect: '/',
-            failureRedirect: '/login',
-            failureFlash: false })
-        );
+            passport.authenticate('local', { failureRedirect: '/login',  failureFlash: false  } ),
+        function(req, res) {
+           
+            res.redirect('/')
+            
+        });
             // If this function gets called, authentication was successful.
             // `req.user` contains the authenticated user.
             //res.redirect('/users/' + req.user.username);

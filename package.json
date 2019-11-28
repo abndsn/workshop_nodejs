@@ -23,6 +23,7 @@
     "passport-local": "^1.0.0",
     "postman": "^0.2.0",
     "pug": "^2.0.4",
+    "typescript": "^3.7.2",
     "xssfilter": "^0.5.3"
   }
 }
